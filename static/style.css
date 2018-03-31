@@ -1,0 +1,21 @@
+.body-header{
+  margin-bottom: 50px;
+}
+
+
+.pred-table{
+  margin-bottom: 50px;
+}
+
+.dropdown{
+  margin-bottom: 50px;
+  margin-top: 40px;
+}
+
+
+.prediction-nav{
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+}

@@ -1,0 +1,190 @@
+<html>
+
+<head>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" />
+  <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+  <script src="{{ url_for('static', filename='prediction.js') }}"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.bundle.min.js"></script>
+
+  <body>
+    <div class='container'>
+      <div class='site-content'>
+        <div class="col-xs-12 col-md-6">
+          <div class="body-header">
+            <h1>{{company}} Predictions</h1>
+          </div>
+        </div>
+        <div class="col-xs-12 col-md-6">
+          <div class="prediction-nav">
+            <a href='/'> Back </p> </a>
+          </div>
+        </div>
+        <div class="col-xs-12">
+          <div class="pred-table">
+            {{prediction_table}}
+          </div>
+          <div class="company-graph">
+            <h1> Imported stock data about {{company}} </h1>
+            <div class="dropdown">
+              <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                Time Interval
+                <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                <li><a href="#">Hourly</a></li>
+                <li><a href="#day">Daily</a></li>
+                <li><a href="#week">Weekly</a></li>
+                <li><a href="#month">Monthly</a></li>
+              </ul>
+            </div>
+            <canvas id="company_hour_graph" style="displ  ay:none" width="300" height="200"></canvas>
+            <canvas id="company_day_graph" style="display:none" width="300" height="200"></canvas>
+            <canvas id="company_week_graph" style="display:none" width="300" height="200"></canvas>
+            <canvas id="company_month_graph" style="display:none" width="300" height="200"></canvas>
+          </div>
+
+          <script>
+            var chartColors = {
+              red: 'rgb(255, 99, 132)',
+              orange: 'rgb(255, 159, 64)',
+              yellow: 'rgb(255, 205, 86)',
+              green: 'rgb(75, 192, 192)',
+              blue: 'rgb(54, 162, 235)',
+              light_blue: 'rgb(230, 249, 255)',
+              purple: 'rgb(153, 102, 255)',
+              grey: 'rgb(231,233,237)'
+            };
+
+            var companyHourGraph = document.getElementById("company_hour_graph");
+            Chart.defaults.global.defaultFontFamily = "Lato";
+            Chart.defaults.global.defaultFontSize = 18;
+
+            var priceData = {
+              labels: [{% for item in company_hour_labels %} "{{item}}", {% endfor %}],
+              datasets: [{
+                label: "Price",
+                data: [{% for item in company_hour_data %} {{item}}, {% endfor %}],
+                backgroundColor: chartColors.light_blue,
+                borderColor: chartColors.blue,
+              }]
+            };
+
+            var chartOptions = {
+              legend: {
+                display: false,
+                position: 'top',
+                labels: {
+                  boxWidth: 80,
+                  fontColor: 'black'
+                }
+              }
+            };
+
+            var lineChart = new Chart(companyHourGraph, {
+              type: 'line',
+              data: priceData,
+              options: chartOptions
+            });
+
+            var companyDailyGraph = document.getElementById("company_day_graph");
+            Chart.defaults.global.defaultFontFamily = "Lato";
+            Chart.defaults.global.defaultFontSize = 18;
+
+            var priceData = {
+              labels: [{% for item in company_daily_labels %} "{{item}}", {% endfor %}],
+              datasets: [{
+                label: "Price",
+                data: [{% for item in company_daily_data %} {{item}}, {% endfor %}],
+                backgroundColor: chartColors.light_blue,
+                borderColor: chartColors.blue,
+              }]
+            };
+
+            var chartOptions = {
+              legend: {
+                display: false,
+                position: 'top',
+                labels: {
+                  boxWidth: 80,
+                  fontColor: 'black'
+                }
+              }
+            };
+
+            var lineChart = new Chart(companyDailyGraph, {
+              type: 'line',
+              data: priceData,
+              options: chartOptions
+            });
+
+            var companyWeeklyGraph = document.getElementById("company_week_graph");
+            Chart.defaults.global.defaultFontFamily = "Lato";
+            Chart.defaults.global.defaultFontSize = 18;
+
+            var priceData = {
+              labels: [{% for item in company_weekly_labels %} "{{item}}", {% endfor %}],
+              datasets: [{
+                label: "Price",
+                backgroundColor: chartColors.light_blue,
+                borderColor: chartColors.blue,
+                data: [{% for item in company_weekly_data %} {{item}}, {% endfor %}],
+              }]
+            };
+
+            var chartOptions = {
+              legend: {
+                display: false,
+                position: 'top',
+                labels: {
+                  boxWidth: 80,
+                  fontColor: 'black'
+                }
+              }
+            };
+
+            var lineChart = new Chart(companyWeeklyGraph, {
+              type: 'line',
+              data: priceData,
+              options: chartOptions
+            });
+
+            var companyMonthlyGraph = document.getElementById("company_month_graph");
+            Chart.defaults.global.defaultFontFamily = "Lato";
+            Chart.defaults.global.defaultFontSize = 18;
+
+            var priceData = {
+              labels: [{% for item in company_monthly_labels %} "{{item}}", {% endfor %}],
+              datasets: [{
+                label: "Price",
+                backgroundColor: chartColors.light_blue,
+                borderColor: chartColors.blue,
+                data: [{% for item in company_monthly_data %} {{item}}, {% endfor %}],
+              }]
+            };
+
+            var chartOptions = {
+              legend: {
+                display: false,
+                position: 'top',
+                labels: {
+                  boxWidth: 80,
+                  fontColor: 'black'
+                }
+              }
+            };
+
+            var lineChart = new Chart(companyMonthlyGraph, {
+              type: 'line',
+              data: priceData,
+              options: chartOptions
+            });
+          </script>
+        </div>
+      </div>
+    </div>
+  </body>
+
+</html>

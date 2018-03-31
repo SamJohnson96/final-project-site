@@ -1,0 +1,5 @@
+__pycache__/
+env/
+models/__pycache__
+.DS_Store
+static/Chart.min.js

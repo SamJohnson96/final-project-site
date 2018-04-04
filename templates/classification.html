@@ -1,36 +1,104 @@
 <html>
-  <head>
-      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"/>
-      <link rel="stylesheet" href='/Users/sam/workspace/final_year_project/final_project_site/css/main.css'/>
-  </head>
-  <body>
-    <div class='container'>
-      <div class='site-content'>
-        <div class="header-nav">
-        	<div class="col-xs-12">
-            <div class="body-header">
-        	      <h1>{{classifier}}</h1>
-            </div>
-        	</div>
+
+<head>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</head>
+<body>
+  <div class='container'>
+    <div class="row">
+      <div class="col-xs-12 col-md-12">
+        <div class="body-header">
+          <h1>{{classifier}}</h1>
         </div>
-      	<div class= "col-xs-12 col-md-8">
-       	  <p>{{content}}</p>
-      	</div>
-        <div class="col-xs-12 col-md-4">
-      		<div class = "navigation">
-      			<ul>
-              <li><a href= "/"> Home </a></br></li>
-              <li><a href = "/topic-classification"> Topic Classification </a> </br></li>
-              <li><a href = "/naive-bayes-classifier"> Naive Bayes </a> </br></li>
-              <li><a href = "/linear-perceptron"> Linear Perceptron </a> </br> </li>
-            	<li><a href = "/support-vector-machine"> Support Vector Machine </a></br></li>
-      	      <li><a href = "/extra-trees-classifier"> Extra Trees Classifier</a></br></li>
-              <li><a href = "/k-nearest-neighbors"> K Nearest neighbours </a></br></li>
-              <li><a href = "/current-apple-predictions#"> Current predictions </a></br></li>
-      			</ul>
-      		</div>
-      	</div>
+      </div>
+      <div class="col-xs-12 col-md-8">
+        <p>{{content}}</p>
+        <div class="api-test">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text">Article Contents</span>
+            </div>
+            <textarea class="form-control" id="article_content" aria-label="textarea"></textarea>
+          </div>
+          <div class="api-sep">
+            <input type="submit" value="Test API" onclick="return classifyArticle();"/>
+            <p id='set_result' class="result"></p>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-12 col-md-4">
+        <div class="navigation">
+          <ul>
+            <li><a href="/"> Home </a></br>
+            </li>
+            <li><a href="/topic-classification"> Topic Classification </a> </br>
+            </li>
+            <li><a href="/naive-bayes-classifier"> Naive Bayes </a> </br>
+            </li>
+            <li><a href="/linear-perceptron"> Linear Perceptron </a> </br>
+            </li>
+            <li><a href="/support-vector-machine"> Support Vector Machine </a></br>
+            </li>
+            <li><a href="/extra-trees-classifier"> Extra Trees Classifier</a></br>
+            </li>
+            <li><a href="/k-nearest-neighbors"> K Nearest neighbours </a></br>
+            </li>
+            <li><a href="/predictions/apple#"> Current Apple predictions </a></br>
+            </li>
+            <li><a href="/predictions/facebook#"> Current Facebook predictions </a></br>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
-  </body>
+  </div>
+</body>
+<script>
+
+    function classifyArticle(){
+      var article_contents = $('#article_content').val();
+      if ( $.trim( $('#article_content').val() ) == '' ){
+        alert('The input has no content, please amend this.');
+        return;
+      }
+      createAjaxRequest(article_contents)
+    }
+
+    function createAjaxRequest(article_contents){
+      var request = $.ajax({
+          url: "{{url}}",
+          type: "POST",
+          contentType:"application/json",
+          data: JSON.stringify({ "Article":{"content":article_contents}}),
+          });
+          request.done(function(msg) {
+            if (msg == '1'){
+              $('#set_result').text('Result: Positive')
+              $('#set_result').css('color','green')
+            }else if (msg == '0'){
+              $('#set_result').text('Result: Negative')
+              $('#set_result').css('color','red')
+            }else if(msg == 'facebook'){
+              $('#set_result').text('Result: Facebook')
+              $('#set_result').css('color','blue')
+            }else if (msg == 'technology'){
+              $('#set_result').text('Result: Technology')
+              $('#set_result').css('color','blue')
+            }else if (msg == 'apple'){
+              $('#set_result').text('Result: Apple')
+              $('#set_result').css('color','blue')
+            }
+          });
+
+          request.fail(function(jqXHR, textStatus) {
+            console.log(textStatus)
+          });
+    }
+
+
+</script>
 </html>

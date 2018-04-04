@@ -1,7 +1,18 @@
-.body-header{
-  margin-bottom: 50px;
+.api-test{
+  display: flex;
+  flex-direction: column;
 }
 
+.api-sep{
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.body-header{
+  margin-top: 60px;
+  margin-bottom: 50px;
+}
 
 .pred-table{
   margin-bottom: 50px;
@@ -12,10 +23,7 @@
   margin-top: 40px;
 }
 
-
-.prediction-nav{
-  display:flex;
-  justify-content: center;
-  align-items: center;
-  height: 100px;
+img{
+  width:100%;
+  height:auto;
 }

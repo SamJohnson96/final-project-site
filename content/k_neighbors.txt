@@ -1,1 +1,1 @@
-k neigbors
+The K Nearest Neighbours classifier is one of the 5 machine learning classifiers used to classifiy the sentiment of newly scraped articles.

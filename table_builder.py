@@ -33,7 +33,6 @@ class PredictionBuilder:
         return tables
 
     def create_facebook_table(self,predictions):
-        print('creating facebook table')
 
         facebook_hourly = predictions['HOUR']['facebook']
         facebook_daily = predictions['DAY']['facebook']
@@ -52,7 +51,6 @@ class PredictionBuilder:
         return table
 
     def create_technology_table(self,predictions):
-        print('creating technology table')
 
         technology_hourly = predictions['HOUR']['technology']
         technology_daily = predictions['DAY']['technology']
@@ -71,7 +69,7 @@ class PredictionBuilder:
         return table
 
     def create_apple_table(self,predictions):
-        print ('creating apple table')
+
         apple_hourly = predictions['HOUR']['technology']
         apple_daily = predictions['DAY']['technology']
         apple_weekly = predictions['WEEK']['technology']

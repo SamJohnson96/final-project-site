@@ -1,1 +1,7 @@
-This is the naive bayes text
+The Naive Bayes classifier is one of the 5 machine learning classifiers used to classifiy the sentiment of newly scraped articles. The Multinomial Naive Bayes classifier was implemented using the classifier provided by Scikit-learn. Their documentation describes it as:
+
+'MultinomialNB implements the naive Bayes algorithm for multinomially distributed data, and is one of the two classic naive Bayes variants used in text classification'.
+
+After rounds of testing and cross validation, the classifier was trained using a TfidfVectorizer which converted the raw training GDELT files into a matrix of TF-IDF features. This yielded better results in testing over using a count vectorizer or a word2vec implementation with a cross validation accuracy of 77.65%. After optimising the algorithm through tuning its hyper parameters, I was able to increase the accuracy to 77.88%.
+
+To test this classifier, input some textual content into the field below. When you are ready to test, click on the 'Test API' button and it hit the API and return a classification of whether the text is positive or negative based on what was in the input field.

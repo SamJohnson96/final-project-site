@@ -1,1 +1,3 @@
-topic
+The topic classifier was the first classifier that had to be implemented for the pipeline. Its job is to classify newly scraped articles into a category. These categories being Apple, Facebook and Technology. To train this model, a large dataset was created. This dataset held articles which have been classified already into these three categories. After numerous rounds of testing and cross-validation , the Naive Bayes classifier was found to be the best performing and most accurate algorithm.
+
+To test, input some textual content into the field below. When you are ready to test, click on the 'Test API' button and it hit the API and return a classification based on what was in the input field.

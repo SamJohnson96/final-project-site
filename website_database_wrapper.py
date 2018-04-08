@@ -4,7 +4,7 @@ from sqlalchemy import Column, Integer, String, Float
 from models.result import Result
 from models.database_tools import Base, create_all_tables, create_new_engine, setup_database, create_new_session
 
-class DatabaseWrapper:
+class WebsiteDatabaseWrapper:
 
     dynamodb = boto3.resource('dynamodb')
     table = dynamodb.Table('predictions')

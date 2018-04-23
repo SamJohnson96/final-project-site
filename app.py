@@ -1,6 +1,6 @@
 from flask import Flask
 from flask import Flask, render_template
-from database_wrapper import DatabaseWrapper
+from website_database_wrapper import WebsiteDatabaseWrapper
 from file_manager import FileManager
 from chart_builder import ChartBuilder
 from table_builder import PredictionBuilder
@@ -8,15 +8,16 @@ from table_builder import PredictionBuilder
 app = Flask(__name__)
 
 # Create wrappers
-database_wrapper = DatabaseWrapper()
+website_database_wrapper = WebsiteDatabaseWrapper()
 file_manager = FileManager()
 chart_builder = ChartBuilder()
 
 
-# Get the predictions
-all_predictions = database_wrapper.get_all_predictions()
-# Get the results
-all_results = database_wrapper.get_all_results()
+# GET PREDICTIONS FROM DYNAMODB
+all_predictions = website_database_wrapper.get_all_predictions()
+
+# GET RESULTS
+all_results = website_database_wrapper.get_all_results()
 
 @app.route("/")
 def main():

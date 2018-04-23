@@ -133,7 +133,6 @@ class ChartBuilder:
         facebook_daily_data = []
         facebook_daily_labels = []
         for index, row in facebook_day.iterrows():
-            print(row[3])
             facebook_daily_labels.append(str(row.name))
             facebook_daily_data.append(float(row[3]))
 

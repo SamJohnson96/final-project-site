@@ -1,6 +1,6 @@
 from flask_table import Table, Col
 
-# Declare your table
+# Declare table
 class ItemTable(Table):
     classes = ['table','table-bordered','table-sm']
     time_interval = Col('Time Interval')

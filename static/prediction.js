@@ -4,8 +4,10 @@ document.addEventListener("DOMContentLoaded", function(event) {
       current_node = table_contents.item(i)
       if (current_node.innerText == 1){
         current_node.style.color = "#09d009"
+        current_node.innerText = 'Rise'
       } else if (current_node.innerText == 0){
         current_node.style.color = "red"
+        current_node.innerText = 'Drop'
       }
   }
 
